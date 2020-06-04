@@ -25,6 +25,10 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
 
     JButton btnJugar;
 
+    JMenuBar menu;
+    JMenu mnuGuardar, mnuRecords;
+
+
     int[] numeros = new int[49];
 
     int numsEscogidos = 0; // Creo una variable para controlar que se han escogido 6 números
@@ -37,7 +41,23 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
         super("Ejercicio 5 Boletín Tema 9");
         setLayout(new FlowLayout());
 
-        llenarArray(numeros);
+        // Menú Guardar
+        mnuGuardar = new JMenu("Guardar última partida");
+        mnuGuardar.setMnemonic('G');
+        mnuGuardar.addActionListener(this);
+
+        // Menú Récords
+        mnuRecords = new JMenu("Ver récords");
+        mnuRecords.setMnemonic('R');
+        mnuRecords.addActionListener(this);
+
+        // Barra de menú
+        menu = new JMenuBar();
+        menu.add(mnuGuardar);
+        menu.add(mnuRecords);
+        this.setJMenuBar(menu);
+
+        llenarArray(numeros); // Lleno el array de números aleatorios entre 0 y 200
 
         for (int i = 0; i < numeros.length; i++) {
             JCheckBox chkNumero = new JCheckBox(String.valueOf(numeros[i])); // Creo un checkbox por cada número
