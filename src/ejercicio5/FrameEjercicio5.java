@@ -29,6 +29,9 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
 
     int numsEscogidos = 0; // Creo una variable para controlar que se han escogido 6 números
     ArrayList<JCheckBox> checkNumeros = new ArrayList<>(); // Creo una colección donde guardar los checkbox de los números
+    ArrayList<Integer> numsSeleccionados = new ArrayList<>(); // Creo otra colección que guardará los números seleccionados
+
+    ArrayList<JLabel> etiquetasNumeros = new ArrayList<>(); // Creo una colección para los números que se mostrarán en la lotería
 
     public FrameEjercicio5(){
         super("Ejercicio 5 Boletín Tema 9");
@@ -49,23 +52,60 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
         btnJugar.setEnabled(false);
         btnJugar.addActionListener(this);
         add(btnJugar);
+
+        for (int i = 0; i < 6; i++) {
+            JLabel lblNum = new JLabel();
+            add(lblNum);
+
+            etiquetasNumeros.add(lblNum);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().getClass() == JCheckBox.class){ // Acciones a realizar si se ha interactuado con un JCheckBox
-
-            for (int i = 0; i < checkNumeros.size(); i++) {
+            for (int i = 0; i < checkNumeros.size(); i++) { // Recorro la colección de CheckBox y actualizo la variable que recoge los que están seleccionados
                 if(e.getSource() == checkNumeros.get(i) && checkNumeros.get(i).isSelected()){
                     numsEscogidos ++;
+                    numsSeleccionados.add(Integer.parseInt(checkNumeros.get(i).getText())); // Añado el número del CheckBox seleccionado a la colección de números seleccionados
                 }
                 else if(e.getSource() == checkNumeros.get(i) && !checkNumeros.get(i).isSelected()){
                     numsEscogidos --;
+                    numsSeleccionados.remove(Integer.parseInt(checkNumeros.get(i).getText())); // Elimino el número de la colección al desseleccionarse el checkbox
                 }
             }
 
-            if(numsEscogidos == 6){
+            if(numsEscogidos == 6){ // Si hay 6 números seleccionados activo el botón, en caso contrario lo desactivo
                 btnJugar.setEnabled(true);
+            }
+            else{
+                btnJugar.setEnabled(false);
+            }
+        }
+        else if(e.getSource() == btnJugar){ // Acciones a realizar cuando se pulse el botón de jugar
+            ArrayList<Integer> numsDeLaMaquina = new ArrayList<>(); // Creo una colección para guardar los números que elige aleatoriamente la máquina
+            for (int i = 0; i < 6; i++) {
+                numsDeLaMaquina.add((int)(Math.random()*200+0));
+            }
+
+            boolean acertado = false; // Creo una variable para controlar si el número ha sido acertado
+            for (int i = 0; i < numsDeLaMaquina.size(); i++) {
+                for (int j = 0; j < numsSeleccionados.size(); j++) {
+                    acertado = false;
+                    if(numsDeLaMaquina.get(i) == numsSeleccionados.get(j)){
+                        acertado = true;
+                    }
+                }
+
+                // Introduzco el número en la etiqueta
+                etiquetasNumeros.get(i).setText(String.valueOf(numsDeLaMaquina.get(i)));
+                etiquetasNumeros.get(i).setSize(etiquetasNumeros.get(i).getPreferredSize());
+                if(acertado){
+                    etiquetasNumeros.get(i).setForeground(Color.GREEN);
+                }
+                else{
+                    etiquetasNumeros.get(i).setForeground(Color.RED);
+                }
             }
         }
     }
