@@ -144,7 +144,10 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
 
         }
         else if(e.getSource() == mnuRecords){
-            //TODO Programar funcionalidad records
+            FrameRecords ventanaRecords = new FrameRecords(this); // Declaro el formulario del panel de configuración
+            ventanaRecords.pack();
+            ventanaRecords.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Y le digo que no haga nada al cerrarse para lanzar la confirmación
+            ventanaRecords.setVisible(true);
         }
     }
 
