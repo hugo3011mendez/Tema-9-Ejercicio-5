@@ -53,7 +53,7 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
             JCheckBox chkNumero = new JCheckBox(String.valueOf(i)); // Creo un checkbox por cada número
             chkNumero.setSize(chkNumero.getPreferredSize());
             chkNumero.setLocation(xCheck, yCheck);
-            chkNumero.addActionListener(this);
+            chkNumero.addItemListener(this);
             this.add(chkNumero);
             checkNumeros.add(chkNumero);
 
@@ -86,26 +86,7 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource().getClass() == JCheckBox.class){ // Acciones a realizar si se ha interactuado con un JCheckBox
-            for (int i = 0; i < checkNumeros.size(); i++) { // Recorro la colección de CheckBox y actualizo la variable que recoge los que están seleccionados
-                if(e.getSource() == checkNumeros.get(i) && checkNumeros.get(i).isSelected()){
-                    numsEscogidos ++;
-                    numsSeleccionados.add(Integer.parseInt(checkNumeros.get(i).getText())); // Añado el número del CheckBox seleccionado a la colección de números seleccionados
-                }
-                else if(e.getSource() == checkNumeros.get(i) && !checkNumeros.get(i).isSelected()){
-                    numsEscogidos --;
-                    numsSeleccionados.remove(Integer.parseInt(checkNumeros.get(i).getText())); // Elimino el número de la colección al desseleccionarse el checkbox
-                }
-            }
-
-            if(numsEscogidos == 6){ // Si hay 6 números seleccionados activo el botón, en caso contrario lo desactivo
-                btnJugar.setEnabled(true);
-            }
-            else{
-                btnJugar.setEnabled(false);
-            }
-        }
-        else if(e.getSource() == btnJugar){ // Acciones a realizar cuando se pulse el botón de jugar
+        if(e.getSource() == btnJugar){ // Acciones a realizar cuando se pulse el botón de jugar
             ArrayList<Integer> numsDeLaMaquina = new ArrayList<>(); // Creo una colección para guardar los números que elige aleatoriamente la máquina
             for (int i = 0; i < 6; i++) {
                 numsDeLaMaquina.add((int)(Math.random()*50+1));
@@ -151,7 +132,21 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        // TODO Auto-generated method stub
-
+        if(((JCheckBox)e.getSource()).isSelected()){
+            numsEscogidos ++;
+            numsSeleccionados.add(Integer.parseInt(((JCheckBox)e.getSource()).getText()));
+        }
+        else{
+            numsEscogidos --;
+            numsSeleccionados.remove(((JCheckBox)e.getSource()).getText());
+        }
+        
+        
+        if(numsEscogidos == 6){ // Si hay 6 números seleccionados activo el botón, en caso contrario lo desactivo
+            btnJugar.setEnabled(true);
+        }
+        else{
+            btnJugar.setEnabled(false);
+        }
     }
 }
