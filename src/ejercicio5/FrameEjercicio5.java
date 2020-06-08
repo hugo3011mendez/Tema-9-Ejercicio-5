@@ -11,27 +11,13 @@ import javax.swing.event.MouseInputListener;
 
 public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListener {
 
-    public void llenarArray(int[] array){
-        for(int i = 0 ; i < array.length; i++){ // Lleno el array de números con números aleatorios
-            array[i] = (int)(Math.random()*200+0);
-
-            for(int j = 0 ; j< array.length; j++){
-                if(i != j && array[i] == array[j]){ // Si hay algún número repetido en el array, se sustituirá por otro número aleatorio diferente
-                    array[j] = (int)(Math.random()*200+0);
-                }
-            }
-        }
-    }
-
     JButton btnJugar;
 
     JMenuBar menu;
     JMenu mnuMenu;
     JMenuItem mnuGuardar, mnuRecords;
 
-
-    int[] numeros = new int[49];
-
+    int xCheck = 30, yCheck = 10, xLabel = 150, yLabel = 185; // Creo variables para gestionar las coordenadas de los CheckBox y los Label cuando se generan dinámicamente
     int numsEscogidos = 0; // Creo una variable para controlar que se han escogido 6 números
     ArrayList<JCheckBox> checkNumeros = new ArrayList<>(); // Creo una colección donde guardar los checkbox de los números
     ArrayList<Integer> numsSeleccionados = new ArrayList<>(); // Creo otra colección que guardará los números seleccionados
@@ -41,7 +27,7 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
 
     public FrameEjercicio5(){
         super("Ejercicio 5 Boletín Tema 9");
-        setLayout(new FlowLayout());
+        setLayout(null);
 
         // Guardar
         mnuGuardar = new JMenuItem("Guardar última partida");
@@ -63,27 +49,38 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
         menu.add(mnuMenu);
         this.setJMenuBar(menu);
 
-        llenarArray(numeros); // Lleno el array de números aleatorios entre 0 y 200
-
-        for (int i = 0; i < numeros.length; i++) {
-            JCheckBox chkNumero = new JCheckBox(String.valueOf(numeros[i])); // Creo un checkbox por cada número
+        for (int i = 1; i <= 49; i++) {
+            JCheckBox chkNumero = new JCheckBox(String.valueOf(i)); // Creo un checkbox por cada número
             chkNumero.setSize(chkNumero.getPreferredSize());
+            chkNumero.setLocation(xCheck, yCheck);
             chkNumero.addActionListener(this);
             this.add(chkNumero);
             checkNumeros.add(chkNumero);
+
+            if(i % 10 == 0){
+                yCheck += 20;
+                xCheck = 30;
+            }
+            else{
+                xCheck += 40;
+            }
         }
 
         btnJugar = new JButton("Jugar");
         btnJugar.setSize(btnJugar.getPreferredSize());
+        btnJugar.setLocation(175, 150);
         btnJugar.setEnabled(false);
         btnJugar.addActionListener(this);
         add(btnJugar);
 
         for (int i = 0; i < 6; i++) {
             JLabel lblNum = new JLabel();
+            lblNum.setLocation(xLabel, yLabel);
             add(lblNum);
 
             etiquetasNumeros.add(lblNum);
+
+            xLabel += 20;
         }
     }
 
@@ -111,7 +108,8 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
         else if(e.getSource() == btnJugar){ // Acciones a realizar cuando se pulse el botón de jugar
             ArrayList<Integer> numsDeLaMaquina = new ArrayList<>(); // Creo una colección para guardar los números que elige aleatoriamente la máquina
             for (int i = 0; i < 6; i++) {
-                numsDeLaMaquina.add((int)(Math.random()*200+0));
+                numsDeLaMaquina.add((int)(Math.random()*50+1));
+                System.err.println(numsDeLaMaquina.get(i));
             }
 
             boolean acertado = false; // Creo una variable para controlar si el número ha sido acertado
