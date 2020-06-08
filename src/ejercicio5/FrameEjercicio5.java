@@ -99,6 +99,10 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
                     acertado = false;
                     if(numsDeLaMaquina.get(i) == numsSeleccionados.get(j)){
                         acertado = true;
+                        checkNumeros.get(numsSeleccionados.get(j)-1).setForeground(Color.GREEN);
+                    }
+                    else{
+                        checkNumeros.get(numsSeleccionados.get(j)-1).setForeground(Color.RED);
                     }
                 }
 
