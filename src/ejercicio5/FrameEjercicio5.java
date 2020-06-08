@@ -17,16 +17,21 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
     JMenu mnuMenu;
     JMenuItem mnuGuardar, mnuRecords;
 
+    Timer temporizador;
+
     int xCheck = 30, yCheck = 10, xLabel = 150, yLabel = 185; // Creo variables para gestionar las coordenadas de los CheckBox y los Label cuando se generan dinámicamente
     int numsEscogidos = 0; // Creo una variable para controlar que se han escogido 6 números
     ArrayList<JCheckBox> checkNumeros = new ArrayList<>(); // Creo una colección donde guardar los checkbox de los números
     ArrayList<Integer> numsSeleccionados = new ArrayList<>(); // Creo otra colección que guardará los números seleccionados
     ArrayList<Integer> numsAcertados = new ArrayList<>(); // Creo una colección para guardar los números acertados en el archivo al mostrarse la nueva ventana
-
     ArrayList<JLabel> etiquetasNumeros = new ArrayList<>(); // Creo una colección para los números que se mostrarán en la lotería
 
+    // Creo variables para gestionar cómo se muestra el título de la ventana
+    String titulo = "Lotería";
+    int letraTitulo = 0;    
+
     public FrameEjercicio5(){
-        super("Ejercicio 5 Boletín Tema 9");
+        super("");
         setLayout(null);
 
         // Guardar
@@ -82,6 +87,10 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
 
             xLabel += 20;
         }
+
+        // Empiezo el contador cuando se abra el formulario
+        temporizador = new Timer(300, this);
+        temporizador.start();     
     }
 
     @Override
@@ -131,6 +140,15 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
             ventanaRecords.pack();
             ventanaRecords.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Y le digo que no haga nada al cerrarse para lanzar la confirmación
             ventanaRecords.setVisible(true);
+        }
+        else if(e.getSource() == temporizador){ // Voy añadiendo la palabra letra por letra al título
+            if(letraTitulo == titulo.length()){
+                letraTitulo = 0;
+                setTitle("");
+            }
+
+            setTitle(getTitle() + String.valueOf(titulo.charAt(letraTitulo)));
+            letraTitulo ++;
         }
     }
 
