@@ -53,6 +53,11 @@ public class FrameSecundario extends JDialog implements ActionListener {
             // Ahora procedo a guardar el nombre y los números acertados en el archivo
             try (PrintWriter escribir = new PrintWriter(new FileWriter(archivoLoteria, true))){
                 escribir.println(txfNombre.getText() + ":" + panelDeControl.numsAcertados.size());
+
+                JOptionPane.showMessageDialog(null, "Record guardado correctamente!",
+                "Operación realizada", JOptionPane.INFORMATION_MESSAGE);
+
+                this.dispose();
             } catch (IOException e2) {
                 System.err.println("Error de acceso al archivo de operaciones");
             }
