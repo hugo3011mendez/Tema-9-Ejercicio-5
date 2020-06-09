@@ -134,17 +134,18 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
                         }
                     }
 
-                    // Introduzco el número en la etiqueta
-                    etiquetasNumeros.get(i).setText(String.valueOf(numsDeLaMaquina[i]));
-                    etiquetasNumeros.get(i).setSize(etiquetasNumeros.get(i).getPreferredSize());
-                    if(acertado){
-                        etiquetasNumeros.get(i).setForeground(Color.GREEN);
-                        numsAcertados.add(numsDeLaMaquina[i]);
-                    }
-                    else{
-                        etiquetasNumeros.get(i).setForeground(Color.RED);
-                    }
                 }
+
+                // Introduzco el número en la etiqueta
+                etiquetasNumeros.get(i).setText(String.valueOf(numsDeLaMaquina[i]));
+                etiquetasNumeros.get(i).setSize(etiquetasNumeros.get(i).getPreferredSize());
+                if(acertado){
+                    etiquetasNumeros.get(i).setForeground(Color.GREEN);
+                    numsAcertados.add(numsDeLaMaquina[i]);
+                }
+                else{
+                    etiquetasNumeros.get(i).setForeground(Color.RED);
+                }                
             }
         }
         else if(e.getSource() == mnuGuardar){ // Acciones a realizar al pulsar el menú guardar
