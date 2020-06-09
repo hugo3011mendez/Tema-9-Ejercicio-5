@@ -11,6 +11,17 @@ import javax.swing.event.MouseInputListener;
 
 public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListener {
 
+    public void llenarArray(int[] array){
+        for(int i = 0 ; i < array.length; i++){ // Lleno el array de números con números aleatorios
+            array[i] = (int)(Math.random()*50+1);
+            for(int j = 0 ; j< array.length; j++){
+                if(i != j && array[i] == array[j]){ // Si hay algún número repetido en el array, se sustituirá por otro número aleatorio diferente
+                    array[j] = (int)(Math.random()*50+1);
+                }
+            }
+        }
+    }
+
     JButton btnJugar;
 
     JMenuBar menu;
@@ -22,6 +33,7 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
     int xCheck = 30, yCheck = 10, xLabel = 150, yLabel = 185; // Creo variables para gestionar las coordenadas de los CheckBox y los Label cuando se generan dinámicamente
     int numsEscogidos = 0; // Creo una variable para controlar que se han escogido 6 números
     ArrayList<JCheckBox> checkNumeros = new ArrayList<>(); // Creo una colección donde guardar los checkbox de los números
+    int[] numsDeLaMaquina = new int[6]; // Creo una colección para guardar los números que elige aleatoriamente la máquina
     ArrayList<Integer> numsSeleccionados = new ArrayList<>(); // Creo otra colección que guardará los números seleccionados
     ArrayList<Integer> numsAcertados = new ArrayList<>(); // Creo una colección para guardar los números acertados en el archivo al mostrarse la nueva ventana
     ArrayList<JLabel> etiquetasNumeros = new ArrayList<>(); // Creo una colección para los números que se mostrarán en la lotería
@@ -96,34 +108,42 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnJugar){ // Acciones a realizar cuando se pulse el botón de jugar
-            ArrayList<Integer> numsDeLaMaquina = new ArrayList<>(); // Creo una colección para guardar los números que elige aleatoriamente la máquina
-            for (int i = 0; i < 6; i++) {
-                numsDeLaMaquina.add((int)(Math.random()*50+1));
-                System.err.println(numsDeLaMaquina.get(i));
-            }
+
+            // llenarArray(numsDeLaMaquina);
+
+            numsDeLaMaquina[0] = 4;
+            numsDeLaMaquina[1] = 44;
+            numsDeLaMaquina[2] = 30;
+            numsDeLaMaquina[3] = 22;
+            numsDeLaMaquina[4] = 7;
+            numsDeLaMaquina[5] = 1;
 
             boolean acertado = false; // Creo una variable para controlar si el número ha sido acertado
-            for (int i = 0; i < numsDeLaMaquina.size(); i++) {
+            for (int i = 0; i < numsDeLaMaquina.length; i++) {
+                acertado = false;
+
                 for (int j = 0; j < numsSeleccionados.size(); j++) {
-                    acertado = false;
-                    if(numsDeLaMaquina.get(i) == numsSeleccionados.get(j)){
+
+                    if(numsDeLaMaquina[i] == numsSeleccionados.get(j)){
                         acertado = true;
                         checkNumeros.get(numsSeleccionados.get(j)-1).setForeground(Color.GREEN);
                     }
                     else{
-                        checkNumeros.get(numsSeleccionados.get(j)-1).setForeground(Color.RED);
+                        if(!acertado){
+                            checkNumeros.get(numsSeleccionados.get(j)-1).setForeground(Color.RED);
+                        }
                     }
-                }
 
-                // Introduzco el número en la etiqueta
-                etiquetasNumeros.get(i).setText(String.valueOf(numsDeLaMaquina.get(i)));
-                etiquetasNumeros.get(i).setSize(etiquetasNumeros.get(i).getPreferredSize());
-                if(acertado){
-                    etiquetasNumeros.get(i).setForeground(Color.GREEN);
-                    numsAcertados.add(numsDeLaMaquina.get(i));
-                }
-                else{
-                    etiquetasNumeros.get(i).setForeground(Color.RED);
+                    // Introduzco el número en la etiqueta
+                    etiquetasNumeros.get(i).setText(String.valueOf(numsDeLaMaquina[i]));
+                    etiquetasNumeros.get(i).setSize(etiquetasNumeros.get(i).getPreferredSize());
+                    if(acertado){
+                        etiquetasNumeros.get(i).setForeground(Color.GREEN);
+                        numsAcertados.add(numsDeLaMaquina[i]);
+                    }
+                    else{
+                        etiquetasNumeros.get(i).setForeground(Color.RED);
+                    }
                 }
             }
         }
@@ -160,7 +180,7 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
         }
         else{
             numsEscogidos --;
-            numsSeleccionados.remove(((JCheckBox)e.getSource()).getText());
+            numsSeleccionados.remove(numsSeleccionados.indexOf(Integer.parseInt(((JCheckBox)e.getSource()).getText())));
         }
         
         
