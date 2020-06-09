@@ -32,8 +32,12 @@ public class FrameRecords extends JDialog implements ActionListener {
             try (Scanner mostrarArchivo = new Scanner(archivoLoteria)) { // Hago un try-with-resources para leer el archivo
                 while (mostrarArchivo.hasNext()) {
                     texto = mostrarArchivo.nextLine();
-
-                    txaRecords.append("Nombre : " + texto.split(":")[0] + "  Aciertos : " + texto.split(":")[1] + "\n");
+                    try {
+                        txaRecords.append("Nombre : " + texto.split(":")[0] + "  Aciertos : " + texto.split(":")[1] + "\n");
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Error de acceso al archivo de lotería!",
+                        "Error al leer del archivo", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Error de acceso al archivo de lotería!",
