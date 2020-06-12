@@ -109,19 +109,8 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnJugar){ // Acciones a realizar cuando se pulse el botón de jugar
 
-            // llenarArray(numsDeLaMaquina);
+            llenarArray(numsDeLaMaquina);
 
-            numsDeLaMaquina[0] = 4;
-            numsDeLaMaquina[1] = 44;
-            numsDeLaMaquina[2] = 30;
-            numsDeLaMaquina[3] = 22;
-            numsDeLaMaquina[4] = 7;
-            numsDeLaMaquina[5] = 1;
-
-
-            // System.err.println("-------------------------------------------");
-            // System.err.println("-------------------------------------------");
-            // System.err.println("-------------------------------------------");
 
             boolean acertado = false; // Creo una variable para controlar si el número ha sido acertado
             for (int i = 0; i < numsDeLaMaquina.length; i++) {
@@ -132,14 +121,12 @@ public class FrameEjercicio5 extends JFrame implements ActionListener, ItemListe
                     if(numsDeLaMaquina[i] == numsSeleccionados.get(j)){
                         acertado = true;
                         checkNumeros.get(numsSeleccionados.get(j)-1).setForeground(Color.GREEN);
-                        // System.err.println("Acierto "+(numsSeleccionados.get(j)-1));
                     }
                     else{
                         
                         if(!acertado){
                             if(checkNumeros.get(numsSeleccionados.get(j)-1).getForeground() != Color.GREEN){
                                 checkNumeros.get(numsSeleccionados.get(j)-1).setForeground(Color.RED);
-                                // System.err.println("Fallo "+(numsSeleccionados.get(j)-1));
                             }
                         }
                     }
